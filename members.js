@@ -86,11 +86,29 @@ function fetch_members(group_name) {
         .catch(function() { throw new Error('Could not retrieve group ' + group_name)});
 }
 
-/* ====== testing code ======= */
+/**
+ * Retrieves the list of bank accounts
+ * @returns A promise for an array of bank accounts
+ * XXX: Move to a separate module
+ */
+function fetch_accounts() {
+    return fetch(base_url + 'bank_accounts', fetch_options)
+        .then(res => res.json())
+        .catch(function() { throw new Error('Could not retrieve bank accounts')});
+}
+
+
+/* XXX: Convert to redux states */
+exports.groups   = fetch_groups;
+exports.member   = fetch_member;
+exports.members  = fetch_members;
+exports.accounts = fetch_accounts;
+
+/* ====== testing code =======
 
 const members = fetch_members('Pojat-06');
 
 members.then(a => a.map(m => m.then(member => console.log(member.member.id))));
 
-
+*/
 
