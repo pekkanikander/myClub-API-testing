@@ -1,5 +1,5 @@
 function Invoice(bank_account_id, due_date, group_id, member_id, invoice_lines) {
-    console.log("Invoice:" + member_id);
+    // console.log("Invoice:" + member_id);
     this._json = {
         "invoice": {
             "bank_account_id": bank_account_id,

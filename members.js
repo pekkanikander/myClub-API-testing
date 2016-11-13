@@ -1,3 +1,5 @@
+'use strict'
+
 /**
  * myClub.fi API functions for handling club members
  * Copyright (c) 2016 Pekka Nikander
@@ -54,6 +56,16 @@ function fetch_groups() {
 }
 
 /**
+ * Retrieves a group by its name
+ * @returns a Promise for a group object
+ */
+function fetch_group(group_name) {
+    return fetch_groups()
+        .then(json => json.find(group => group.group.name === group_name))
+        .catch(function() { throw new Error('Could not retrieve group ' + group_name)});
+}
+
+/**
  * Retrieves all membership ids of the members of a given group.
  * @returns A Promise for an array of the membership ids
  */
@@ -79,8 +91,7 @@ function fetch_member(member_id) {
  * @returns A Promise for an array of Promises of member records
  */
 function fetch_members(group_name) {
-    return fetch_groups()
-        .then(json  => json.find(group => group.group.name === group_name))
+    return fetch_group(group_name)
         .then(group => fetch_member_ids(group.group.id))
         .then(ids   => ids.map(id => fetch_member(id)))
         .catch(function() { throw new Error('Could not retrieve group ' + group_name)});
@@ -100,6 +111,7 @@ function fetch_accounts() {
 
 /* XXX: Convert to redux states */
 exports.groups   = fetch_groups;
+exports.group    = fetch_group;
 exports.member   = fetch_member;
 exports.members  = fetch_members;
 exports.accounts = fetch_accounts;
