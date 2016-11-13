@@ -1,5 +1,3 @@
-#!/usr/local/bin/node
-
 /**
  * myClub.fi API functions for handling club members
  * Copyright (c) 2016 Pekka Nikander
