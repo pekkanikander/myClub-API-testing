@@ -1,9 +1,18 @@
 #!/usr/local/bin/node
 
+/**
+ * myClub.fi API functions for handling club members
+ * Copyright (c) 2016 Pekka Nikander
+ *
+ * https://www.myclub.fi/api/public.html#members
+ */
+
 const fetch = require('node-fetch');
 
 /**
- * Retrieve the settings.
+ * Retrieve the user-specific settings.
+ *
+ * XXX Move to some other module
  *
  * The settings are stored as JSON, something like the following:
    {
@@ -15,14 +24,25 @@ const fetch = require('node-fetch');
  */
 const settings = require("./settings.json");
 
+/**
+ * Default headers to send with fetch
+ */
 const default_fetch_headers = {
     'User-Agent': 'fetch'
 };
 
+/**
+ * All fetch options
+ *
+ * Compiled together from settings, default headers, etc
+ */
 const fetch_options = {
     'headers': Object.assign({}, default_fetch_headers, settings.headers)
 };
 
+/**
+ * The base URL for all fetch operations towards myClub
+ */
 const base_url = settings.base_url;
 
 /**
