@@ -53,7 +53,7 @@ function fetch_groups() {
         .catch(function() { throw new Error('Could not retrieve groups')});
 }
 
-/*
+/**
  * Retrieves all membership ids of the members of a given group.
  * @returns A Promise for an array of the membership ids
  */
@@ -64,7 +64,7 @@ function fetch_member_ids(group_id) {
         .catch(function() { throw new Error('Could not retrieve group ' + group_id)});
 }
 
-/*
+/**
  * Retrieves a member by identifier
  * @returns A Promise for a member record
  */
@@ -74,9 +74,9 @@ function fetch_member(member_id) {
         .catch(function() { throw new Error('Could not retrieve member ' + member_id)});
 }
 
-/*
+/**
  * Retrieves the members of a given group
- * @returns A Promise for array of Promises of member records
+ * @returns A Promise for an array of Promises of member records
  */
 function fetch_members(group_name) {
     return fetch_groups()
