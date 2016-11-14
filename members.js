@@ -109,6 +109,12 @@ function temp_fetch_accounts() {
         .catch(function() { throw new Error('Could not retrieve bank accounts')});
 }
 
+function temp_fetch_account(iban) {
+    return temp_fetch_accounts()
+        .then(accounts =>
+              accounts.find(account => account.bank_account.iban == iban));
+}
+
 /**
  * Retrieves an event by its ID, which must be known
  * @returns A promise for an event
@@ -134,7 +140,8 @@ function temp_post_invoice(invoice) {
     // console.log(post_options);
 
     const f = fetch(base_url + 'invoices', post_options);
-    f.then(result => console.log(invoice._member.member.id, result.status, result.headers))
+    f.then(result => console.log(invoice._member.member.id, result.status));
+    return f;
 }
 
 /* XXX: Convert to redux states */
@@ -144,6 +151,7 @@ exports.member   = fetch_member;
 exports.members  = fetch_members;
 
 exports.accounts     = temp_fetch_accounts;
+exports.account      = temp_fetch_account;
 exports.event        = temp_fetch_event;
 exports.post_invoice = temp_post_invoice;
 

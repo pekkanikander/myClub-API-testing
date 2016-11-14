@@ -7,7 +7,7 @@ function Invoice(member, bank_account_id, due_date, group_id, member_id, invoice
             "due_date": due_date,
             "group_id": group_id,
             "member_id": member_id,
-            "reference_prefix": member_id,
+//          "reference_prefix": member_id,
             "invoice_lines": invoice_lines
         }
     };
