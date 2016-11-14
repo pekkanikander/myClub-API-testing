@@ -28,7 +28,8 @@ const settings = require("./settings.json");
  * Default headers to send with fetch
  */
 const default_fetch_headers = {
-    'User-Agent': 'fetch'
+    'User-Agent': 'fetch',
+    'Content-Type': 'application/json',
 };
 
 /**
@@ -102,19 +103,49 @@ function fetch_members(group_name) {
  * @returns A promise for an array of bank accounts
  * XXX: Move to a separate module
  */
-function fetch_accounts() {
+function temp_fetch_accounts() {
     return fetch(base_url + 'bank_accounts', fetch_options)
         .then(res => res.json())
         .catch(function() { throw new Error('Could not retrieve bank accounts')});
 }
 
+/**
+ * Retrieves an event by its ID, which must be known
+ * @returns A promise for an event
+ * XXX: Move to a separate module
+ */
+function temp_fetch_event(event_id) {
+    return fetch(base_url + 'events/' + event_id, fetch_options)
+        .then(res => res.json())
+        .catch(function() { throw new Error('Could not retrieve event' + event_id)});
+}
+
+/**
+ * Posts a new invoice
+ * XXX: Move to a separate module
+ */
+function temp_post_invoice(invoice) {
+    const post_options = {
+        headers: Object.assign({}, default_fetch_headers, settings.headers),
+        method: 'POST',
+        body:   JSON.stringify(invoice._json)
+    };
+
+    // console.log(post_options);
+
+    const f = fetch(base_url + 'invoices', post_options);
+    f.then(result => console.log(invoice._member.member.id, result.status, result.headers))
+}
 
 /* XXX: Convert to redux states */
 exports.groups   = fetch_groups;
 exports.group    = fetch_group;
 exports.member   = fetch_member;
 exports.members  = fetch_members;
-exports.accounts = fetch_accounts;
+
+exports.accounts     = temp_fetch_accounts;
+exports.event        = temp_fetch_event;
+exports.post_invoice = temp_post_invoice;
 
 /* ====== testing code =======
 
